@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.odin.dao.DeviceGpsInfoDao" >
+  <resultMap id="CurrentResultMap" type="cn.com.odin.model.DeviceGpsInfo" >
+    <id column="DATA_ID" property="dataId" jdbcType="DECIMAL" />
+    <result column="DEVICE_ID" property="deviceID" jdbcType="VARCHAR" />
+    <result column="REV_TIME" property="revTime" jdbcType="DECIMAL" />
+    <result column="LONGITUDE" property="longitude" jdbcType="DECIMAL" />
+    <result column="LATITUDE" property="latitude" jdbcType="DECIMAL" />
+    <result column="MAR_LONGITUDE" property="marLongitude" jdbcType="DECIMAL" />
+    <result column="MAR_LATITUDE" property="marLatitude" jdbcType="DECIMAL" />
+    <result column="SPEED" property="speed" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DATA_ID, DEVICE_ID, REV_TIME, LONGITUDE, LATITUDE, MAR_LONGITUDE, MAR_LATITUDE, SPEED
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="CurrentResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from T_INFO_DEVICE_GPS
+    where DATA_ID = #{dataId,jdbcType=DECIMAL}
+  </select>
+
+  <insert id="insertDeviceGpsCurrent" parameterType="cn.com.odin.model.DeviceGpsInfo" >
+    insert into T_INFO_DEVICE_GPS (DATA_ID, DEVICE_ID, REV_TIME, 
+      LONGITUDE, LATITUDE, MAR_LONGITUDE, 
+      MAR_LATITUDE, SPEED)
+    values (#{dataId,jdbcType=DECIMAL}, #{deviceID,jdbcType=VARCHAR}, #{revTime,jdbcType=DECIMAL},
+      #{longitude,jdbcType=DECIMAL}, #{latitude,jdbcType=DECIMAL}, #{marLongitude,jdbcType=DECIMAL}, 
+      #{marLatitude,jdbcType=DECIMAL}, #{speed,jdbcType=DECIMAL})
+  </insert>
+
+  <update id="updateCurrentByDeviceId" parameterType="cn.com.odin.model.DeviceGpsInfo" >
+    update T_INFO_DEVICE_GPS
+    set
+      REV_TIME = #{revTime,jdbcType=DECIMAL},
+      LONGITUDE = #{longitude,jdbcType=DECIMAL},
+      LATITUDE = #{latitude,jdbcType=DECIMAL},
+      MAR_LONGITUDE = #{marLongitude,jdbcType=DECIMAL},
+      MAR_LATITUDE = #{marLatitude,jdbcType=DECIMAL},
+      SPEED = #{speed,jdbcType=DECIMAL}
+    where DEVICE_ID = #{deviceID,jdbcType=DECIMAL}
+  </update>
+</mapper>
